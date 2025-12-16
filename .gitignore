@@ -1,0 +1,16 @@
+venv/
+__pycache__/
+.env
+*.pyc
+node_modules/
+.idea/
+.vscode/
+.DS_Store
+
+# AI / ML model files
+hf_models/
+backend/data/hf_models/
+models/
+*.bin
+*.pt
+*.onnx
