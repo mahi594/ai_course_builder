@@ -14,3 +14,11 @@ models/
 *.bin
 *.pt
 *.onnx
+
+# Generated AI outputs
+backend/data/audio/
+backend/data/transcripts/
+data/audio/
+*.mp3
+*.wav
+
