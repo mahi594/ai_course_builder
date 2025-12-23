@@ -1,0 +1,268 @@
+{
+  "job_id": "3b55a9f0-eec1-484a-a7de-4984d324f037",
+  "status": "completed",
+  "created_at": "2025-12-17T10:32:38.419490",
+  "result": {
+    "course_title": "Python Basics (Beginner)",
+    "difficulty": "beginner",
+    "modules": [
+      {
+        "course_title": "Module 1: Python Basics",
+        "source": "https://www.youtube.com/watch?v=fr1f84rg4Nw",
+        "lessons": [
+          {
+            "lesson_number": 1,
+            "lesson_title": "Will Print Concepts",
+            "key_points": [
+              "will",
+              "print",
+              "string",
+              "written",
+              "variable"
+            ],
+            "notes": [
+              "\u6211\u5c31\u53bb masala Fal stur\u30f3\u30c9 has lost some sc problemas Illts my one way to visit Joy to film this channel Ill see if i will complete your chart Ill see if you are planning for now The world\ud0a4ive will become diversity Ill see if i will make plans with you So also tell us what your importance to the family Let us get news about next all the other things Invest in 1.6 KVP Minus for kavaluh Nuck dalak Don't be\u044f\u0436 Va-9 to get more discussion, Now we will practice the video with you So, A & A & B & 3 Ajay Go.",
+              "And if I am a print C, you will also get print the screen.",
+              "But if I have to play a print STR1, then obviously, the string will be printed.",
+              "On my print, I will print it on my set.",
+              "So, I will accept exception as E. And then I will print the exception."
+            ],
+            "quiz": [
+              {
+                "question": "And if i am a _____ c, you will also get _____ the screen.",
+                "options": [
+                  "print",
+                  "will",
+                  "written",
+                  "string"
+                ],
+                "answer": "print"
+              },
+              {
+                "question": "But if i have to play a _____ str1, then obviously, the string will be _____ed.",
+                "options": [
+                  "variable",
+                  "will",
+                  "written",
+                  "print"
+                ],
+                "answer": "print"
+              },
+              {
+                "question": "On my _____, i will _____ it on my set.",
+                "options": [
+                  "will",
+                  "variable",
+                  "print",
+                  "written"
+                ],
+                "answer": "print"
+              }
+            ]
+          },
+          {
+            "lesson_number": 2,
+            "lesson_title": "Type Will Concepts",
+            "key_points": [
+              "type",
+              "will",
+              "language",
+              "tell",
+              "strings"
+            ],
+            "notes": [
+              "\u6211\u5c31\u53bb masala Fal stur\u30f3\u30c9 has lost some sc problemas Illts my one way to visit Joy to film this channel Ill see if i will complete your chart Ill see if you are planning for now The world\ud0a4ive will become diversity Ill see if i will make plans with you So also tell us what your importance to the family Let us get news about next all the other things Invest in 1.6 KVP Minus for kavaluh Nuck dalak Don't be\u044f\u0436 Va-9 to get more discussion, Now we will practice the video with you So, A & A & B & 3 Ajay Go.",
+              "Like I am going to say, if I have to run the type D, I will tell you that type is what I have done.",
+              "And if you want to convert it to digital, you can get a type of type of type of type.",
+              "So, if you are a beginner, then you don't need to do any type of type of type.",
+              "I will use the items on the iner nd.. ..and then I will edit 3 tiles\u2026 ..so i can tell that whenever I spend money in one place.. ..to take threat items."
+            ],
+            "quiz": [
+              {
+                "question": "\u6211\u5c31\u53bb masala fal stur\u30f3\u30c9 has lost some sc problemas illts my one way to visit joy to film this channel ill see if i will complete your chart ill see if you are planning for now the world\ud0a4ive will become diversity ill see if i will make plans with you so also _____ us what your importance to the family let us get news about next all the other things invest in 1.6 kvp minus for kavaluh nuck dalak don't be\u044f\u0436 va-9 to get more discussion, now we will practice the video with you so, a & a & b & 3 ajay go.",
+                "options": [
+                  "type",
+                  "strings",
+                  "tell",
+                  "will"
+                ],
+                "answer": "tell"
+              },
+              {
+                "question": "Like i am going to say, if i have to run the _____ d, i will tell you that _____ is what i have done.",
+                "options": [
+                  "will",
+                  "type",
+                  "strings",
+                  "language"
+                ],
+                "answer": "type"
+              },
+              {
+                "question": "And if you want to convert it to digital, you can get a _____ of _____ of _____ of _____.",
+                "options": [
+                  "tell",
+                  "strings",
+                  "language",
+                  "type"
+                ],
+                "answer": "type"
+              }
+            ]
+          },
+          {
+            "lesson_number": 3,
+            "lesson_title": "List Will Concepts",
+            "key_points": [
+              "list",
+              "will",
+              "change",
+              "value",
+              "index"
+            ],
+            "notes": [
+              "\u6211\u5c31\u53bb masala Fal stur\u30f3\u30c9 has lost some sc problemas Illts my one way to visit Joy to film this channel Ill see if i will complete your chart Ill see if you are planning for now The world\ud0a4ive will become diversity Ill see if i will make plans with you So also tell us what your importance to the family Let us get news about next all the other things Invest in 1.6 KVP Minus for kavaluh Nuck dalak Don't be\u044f\u0436 Va-9 to get more discussion, Now we will practice the video with you So, A & A & B & 3 Ajay Go.",
+              "I will list it on my list or set on my list.",
+              "If you define the index in the index, then you will get index equal to 3.",
+              "..who have a 2\u2026 Usually 2 tirana on Used cute to tend to lish dhu inside but the place is also very refreshing You can also see this area all nich\u3044\u3046\u041esen is called panth department We see \u042d\u0442\u043e seems like it is very cool we have sponsors who will instruct a dog with such trends There is also a place where the owners are most popular Gelders First, you can change the value of money.",
+              "And if you have list of list, then you can list it."
+            ],
+            "quiz": [
+              {
+                "question": "I will _____ it on my _____ or set on my _____.",
+                "options": [
+                  "list",
+                  "index",
+                  "value",
+                  "will"
+                ],
+                "answer": "list"
+              },
+              {
+                "question": "If you define the _____ in the _____, then you will get _____ equal to 3.",
+                "options": [
+                  "change",
+                  "list",
+                  "will",
+                  "index"
+                ],
+                "answer": "index"
+              },
+              {
+                "question": "..who have a 2\u2026 usually 2 tirana on used cute to tend to lish dhu inside but the place is also very refreshing you can also see this area all nich\u3044\u3046\u043esen is called panth department we see \u044d\u0442\u043e seems like it is very cool we have sponsors who will instruct a dog with such trends there is also a place where the owners are most popular gelders first, you can change the _____ of money.",
+                "options": [
+                  "will",
+                  "value",
+                  "list",
+                  "change"
+                ],
+                "answer": "value"
+              }
+            ]
+          },
+          {
+            "lesson_number": 4,
+            "lesson_title": "Learn Virat Concepts",
+            "key_points": [
+              "learn",
+              "virat",
+              "value",
+              "friend",
+              "doing"
+            ],
+            "notes": [
+              "If I have to learn from my friend, Virat will be able to learn from Virat.",
+              "If you want to learn from your dictionary, you can learn from your friend.",
+              "And if you have a friend, then items And if you have a friend, then you can see that My first element is money.",
+              "Virat, jokyam ire ki hai, and his value is a manli jokyam.",
+              "Virat is not so much for us to learn from his access."
+            ],
+            "quiz": [
+              {
+                "question": "If i have to _____ from my friend, virat will be able to _____ from virat.",
+                "options": [
+                  "doing",
+                  "learn",
+                  "friend",
+                  "value"
+                ],
+                "answer": "learn"
+              },
+              {
+                "question": "If you want to _____ from your dictionary, you can _____ from your friend.",
+                "options": [
+                  "friend",
+                  "virat",
+                  "value",
+                  "learn"
+                ],
+                "answer": "learn"
+              },
+              {
+                "question": "And if you have a _____, then items and if you have a _____, then you can see that my first element is money.",
+                "options": [
+                  "learn",
+                  "virat",
+                  "doing",
+                  "friend"
+                ],
+                "answer": "friend"
+              }
+            ]
+          },
+          {
+            "lesson_number": 5,
+            "lesson_title": "Will Heli Concepts",
+            "key_points": [
+              "will",
+              "heli",
+              "want",
+              "file",
+              "know"
+            ],
+            "notes": [
+              "Then you will want to do one.TX, and you will want to win the heli.",
+              "\u6211\u5c31\u53bb masala Fal stur\u30f3\u30c9 has lost some sc problemas Illts my one way to visit Joy to film this channel Ill see if i will complete your chart Ill see if you are planning for now The world\ud0a4ive will become diversity Ill see if i will make plans with you So also tell us what your importance to the family Let us get news about next all the other things Invest in 1.6 KVP Minus for kavaluh Nuck dalak Don't be\u044f\u0436 Va-9 to get more discussion, Now we will practice the video with you So, A & A & B & 3 Ajay Go.",
+              "Now, you will know that, if you have a file, then you will read it.",
+              "If you want to make a file, then you will want to write it.",
+              "Then i will say a r.write .. And then the heli will make a heli."
+            ],
+            "quiz": [
+              {
+                "question": "Then you will want to do one.tx, and you will want to win the _____.",
+                "options": [
+                  "want",
+                  "file",
+                  "know",
+                  "heli"
+                ],
+                "answer": "heli"
+              },
+              {
+                "question": "Now, you will know that, if you have a _____, then you will read it.",
+                "options": [
+                  "will",
+                  "want",
+                  "file",
+                  "heli"
+                ],
+                "answer": "file"
+              },
+              {
+                "question": "If you want to make a _____, then you will want to write it.",
+                "options": [
+                  "file",
+                  "want",
+                  "heli",
+                  "will"
+                ],
+                "answer": "file"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "error": null
+}

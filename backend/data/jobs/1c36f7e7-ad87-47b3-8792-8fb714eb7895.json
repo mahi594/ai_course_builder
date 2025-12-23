@@ -1,0 +1,268 @@
+{
+  "job_id": "1c36f7e7-ad87-47b3-8792-8fb714eb7895",
+  "status": "completed",
+  "created_at": "2025-12-17T06:48:18.714792",
+  "result": {
+    "course_title": "Python For Data Science (Beginner)",
+    "difficulty": "beginner",
+    "modules": [
+      {
+        "course_title": "Module 1: Python for Data Science",
+        "source": "https://www.youtube.com/watch?v=HrRA67O-QXI",
+        "lessons": [
+          {
+            "lesson_number": 1,
+            "lesson_title": "Data What Concepts",
+            "key_points": [
+              "data",
+              "what",
+              "look",
+              "frame",
+              "right"
+            ],
+            "notes": [
+              "So let's go ahead and use our sample data frame and we can call the box plot right off of the data frame and then we need to tell it what column is it that we want as a bar and we're going to see study hours.",
+              "This code should make sense to you here and scroll down and what we'll see here is our data frame and then below that we'll see the histogram that we had and the box plot right with the mean median and mode all right in the center.",
+              "So let's go ahead and create a new cell here and we're going to use this a scikit learn dot pre processing here and then we're going to import this min max scalar there is alright so let's go ahead and create the scalar and we want a min max scalar and then we're going to take and create a new data frame what we're going to call DF normalize because we normalize this data and we're going to take our sample data here.",
+              "It's a different way to create a data frame from another data frame we're just selecting specific columns and copying the data over.",
+              "Now let's go ahead and normalize this data frame so let's say DF normalize and then let's tell it what columns we want to normalize and remember when you're specifying multiple columns in a data frame."
+            ],
+            "quiz": [
+              {
+                "question": "So let's go ahead and use our sample _____ frame and we can call the box plot right off of the _____ frame and then we need to tell it what column is it that we want as a bar and we're going to see study hours.",
+                "options": [
+                  "frame",
+                  "look",
+                  "what",
+                  "data"
+                ],
+                "answer": "data"
+              },
+              {
+                "question": "This code should make sense to you here and scroll down and what we'll see here is our data _____ and then below that we'll see the histogram that we had and the box plot right with the mean median and mode all right in the center.",
+                "options": [
+                  "right",
+                  "frame",
+                  "look",
+                  "what"
+                ],
+                "answer": "frame"
+              },
+              {
+                "question": "So let's go ahead and create a new cell here and we're going to use this a scikit learn dot pre processing here and then we're going to import this min max scalar there is alright so let's go ahead and create the scalar and we want a min max scalar and then we're going to take and create a new data frame _____ we're going to call df normalize because we normalize this data and we're going to take our sample data here.",
+                "options": [
+                  "data",
+                  "what",
+                  "right",
+                  "frame"
+                ],
+                "answer": "what"
+              }
+            ]
+          },
+          {
+            "lesson_number": 2,
+            "lesson_title": "Array First Concepts",
+            "key_points": [
+              "array",
+              "first",
+              "data",
+              "item",
+              "what"
+            ],
+            "notes": [
+              "So we're going to get the first array, first item from first array.",
+              "And if we pull back the first item, the item in the zero place, we're going to get the first array.",
+              "And if we want the first item from the first array, can you guess what we need here?",
+              "So for instance, if we wanted the first item in the array, because a array started zero, we would put zero.",
+              "So we wanted the first item from the first array."
+            ],
+            "quiz": [
+              {
+                "question": "So we're going to get the first _____, first item from first _____.",
+                "options": [
+                  "what",
+                  "item",
+                  "first",
+                  "array"
+                ],
+                "answer": "array"
+              },
+              {
+                "question": "And if we pull back the first item, the item in the zero place, we're going to get the first _____.",
+                "options": [
+                  "first",
+                  "item",
+                  "array",
+                  "data"
+                ],
+                "answer": "array"
+              },
+              {
+                "question": "And if we want the _____ item from the _____ array, can you guess what we need here?",
+                "options": [
+                  "first",
+                  "item",
+                  "data",
+                  "array"
+                ],
+                "answer": "first"
+              }
+            ]
+          },
+          {
+            "lesson_number": 3,
+            "lesson_title": "Data Mean Concepts",
+            "key_points": [
+              "data",
+              "mean",
+              "right",
+              "hours",
+              "grade"
+            ],
+            "notes": [
+              "And now we've got a bar chart where we can actually compare these values and again you can tell just by looking at the chart that the number of study hours is directly correlated to the grade I mean you can tell that just by looking the more hours you study the higher the grade tends to be if you study for just a few hours or like this person here great is really really low so there seems to be a correlation between.",
+              "And then we want to know, though, from that, we want to know the mean of the average study hours and grade or the average study hours and grade.",
+              "A grade can be from 0 to 100 whereas study hours don't go that high right I mean study hours might be 20 is is our time.",
+              "Well, since this actually returns another data frame as you can see here, we can just say for this grade column, give us the mean, right?",
+              "And in that series, what we want to do is just say from the data frame here with the grade was the grade greater than or equal to 60, right?"
+            ],
+            "quiz": [
+              {
+                "question": "And now we've got a bar chart where we can actually compare these values and again you can tell just by looking at the chart that the number of study _____ is directly correlated to the grade i mean you can tell that just by looking the more _____ you study the higher the grade tends to be if you study for just a few _____ or like this person here great is really really low so there seems to be a correlation between.",
+                "options": [
+                  "mean",
+                  "grade",
+                  "hours",
+                  "right"
+                ],
+                "answer": "hours"
+              },
+              {
+                "question": "And then we want to know, though, from that, we want to know the mean of the average study hours and _____ or the average study hours and _____.",
+                "options": [
+                  "mean",
+                  "right",
+                  "data",
+                  "grade"
+                ],
+                "answer": "grade"
+              },
+              {
+                "question": "A grade can be from 0 to 100 whereas study _____ don't go that high right i mean study _____ might be 20 is is our time.",
+                "options": [
+                  "hours",
+                  "mean",
+                  "grade",
+                  "data"
+                ],
+                "answer": "hours"
+              }
+            ]
+          },
+          {
+            "lesson_number": 4,
+            "lesson_title": "Line Value Concepts",
+            "key_points": [
+              "line",
+              "value",
+              "what",
+              "values",
+              "right"
+            ],
+            "notes": [
+              "And the error is the difference between the actual y value and the new y value that we calculated for the line, the regression line that we're going to draw.",
+              "All right, so if we go back and run this, we should see that study hours now shows is having zero no values, right?",
+              "And in order to sum up all of the people who passed all the truths and all the falses, what we need to do is use the value counts method here, which will give us a sum of all the truths and a sum of all the falses, two values.",
+              "If you line up all of the data from lowest to highest, what's the number that's right in the middle equally from both ends.",
+              "We need to tell it the line, the value that we want to add here is the min value."
+            ],
+            "quiz": [
+              {
+                "question": "And the error is the difference between the actual y _____ and the new y _____ that we calculated for the line, the regression line that we're going to draw.",
+                "options": [
+                  "values",
+                  "what",
+                  "right",
+                  "value"
+                ],
+                "answer": "value"
+              },
+              {
+                "question": "All right, so if we go back and run this, we should see that study hours now shows is having zero no _____, right?",
+                "options": [
+                  "line",
+                  "value",
+                  "values",
+                  "what"
+                ],
+                "answer": "values"
+              },
+              {
+                "question": "And in order to sum up all of the people who passed all the truths and all the falses, _____ we need to do is use the value counts method here, which will give us a sum of all the truths and a sum of all the falses, two values.",
+                "options": [
+                  "right",
+                  "what",
+                  "line",
+                  "value"
+                ],
+                "answer": "what"
+              }
+            ]
+          },
+          {
+            "lesson_number": 5,
+            "lesson_title": "Plot Want Concepts",
+            "key_points": [
+              "plot",
+              "want",
+              "study",
+              "data",
+              "what"
+            ],
+            "notes": [
+              "Okay and then the last thing we want to do is plot this out so let's take our normalize data frame call the plot here x's name is exactly what we were doing before why since we want both grade and study hours.",
+              "So let's go ahead and use our sample data frame and we can call the box plot right off of the data frame and then we need to tell it what column is it that we want as a bar and we're going to see study hours.",
+              "You're going to have that goofy syntax there so we want the grade and what the study hours okay and then what we want to do is we want to tell it that these columns are equal to and let's call that scalar and max scalar and we're going to say fit transform okay.",
+              "So let's go ahead and create a new cell here and we're going to use this a scikit learn dot pre processing here and then we're going to import this min max scalar there is alright so let's go ahead and create the scalar and we want a min max scalar and then we're going to take and create a new data frame what we're going to call DF normalize because we normalize this data and we're going to take our sample data here.",
+              "Okay, and then what we want to do is we want to pull off the name grade and study hours columns because that's what we're using in our bar chart."
+            ],
+            "quiz": [
+              {
+                "question": "Okay and then the last thing we want to do is _____ this out so let's take our normalize data frame call the _____ here x's name is exactly what we were doing before why since we want both grade and study hours.",
+                "options": [
+                  "study",
+                  "data",
+                  "plot",
+                  "what"
+                ],
+                "answer": "plot"
+              },
+              {
+                "question": "So let's go ahead and use our sample _____ frame and we can call the box plot right off of the _____ frame and then we need to tell it what column is it that we want as a bar and we're going to see study hours.",
+                "options": [
+                  "study",
+                  "what",
+                  "want",
+                  "data"
+                ],
+                "answer": "data"
+              },
+              {
+                "question": "You're going to have that goofy syntax there so we want the grade and what the _____ hours okay and then what we want to do is we want to tell it that these columns are equal to and let's call that scalar and max scalar and we're going to say fit transform okay.",
+                "options": [
+                  "want",
+                  "plot",
+                  "study",
+                  "data"
+                ],
+                "answer": "study"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "error": null
+}

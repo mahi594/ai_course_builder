@@ -1,29 +1,33 @@
-import os
+import os, json, hashlib
 from backend.services.transcript_service import get_full_transcript
 
-
-# Folder to store cached transcripts
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CACHE_DIR = os.path.join(BASE_DIR, "data", "transcripts")
-
+CACHE_DIR = "data/transcripts"
 os.makedirs(CACHE_DIR, exist_ok=True)
+MAX_CHARS = 6000
+
+
+def _cache_path(url: str) -> str:
+    key = hashlib.md5(url.encode()).hexdigest()
+    return os.path.join(CACHE_DIR, f"{key}.json")
 
 
 def get_cached_transcript(youtube_url: str) -> str:
-    video_id = youtube_url.split("v=")[-1]
-    cache_path = os.path.join(CACHE_DIR, f"{video_id}.txt")
+    path = _cache_path(youtube_url)
 
-    # Load from cache if exists
-    if os.path.exists(cache_path):
-        print("📂 Loading transcript from cache")
-        with open(cache_path, "r", encoding="utf-8") as f:
-            return f.read()
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            transcript = data.get("transcript", "")
+            if isinstance(transcript, list):
+                transcript = " ".join(transcript)
+            return transcript
 
-    # Otherwise generate transcript once
-    print("🎙️ Generating transcript (first time only)")
     transcript = get_full_transcript(youtube_url)
 
-    with open(cache_path, "w", encoding="utf-8") as f:
-        f.write(transcript)
+    if len(transcript) > MAX_CHARS:
+        transcript = transcript[:MAX_CHARS]
+
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump({"transcript": transcript}, f)
 
     return transcript

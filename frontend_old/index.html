@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>AI Course Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 20px;
+        }
+        h1 { color: #333; }
+        input, select, button {
+            padding: 10px;
+            margin: 5px 0;
+            width: 300px;
+        }
+        button {
+            cursor: pointer;
+            background: #2563eb;
+            color: white;
+            border: none;
+        }
+        .module, .lesson {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+        .lesson {
+            margin-left: 20px;
+            border-left: 4px solid #2563eb;
+        }
+        .quiz {
+            background: #f1f5f9;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .loading {
+            color: orange;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🎓 AI Course Builder</h1>
+
+<label>Topic</label><br>
+<input id="topic" placeholder="e.g. Deep Learning"><br>
+
+<label>Difficulty</label><br>
+<select id="difficulty">
+    <option value="beginner">Beginner</option>
+    <option value="intermediate">Intermediate</option>
+    <option value="advanced">Advanced</option>
+</select><br>
+
+<button onclick="generateCourse()">Generate Course</button>
+
+<p id="status"></p>
+
+<div id="result"></div>
+
+<script>
+const API_BASE = "http://127.0.0.1:8000";
+
+async function generateCourse() {
+    document.getElementById("result").innerHTML = "";
+    document.getElementById("status").innerHTML = "<span class='loading'>Generating course...</span>";
+
+    const topic = document.getElementById("topic").value;
+    const difficulty = document.getElementById("difficulty").value;
+
+    const res = await fetch(`${API_BASE}/generate-course`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            topic,
+            difficulty,
+            videos_per_topic: 1
+        })
+    });
+
+    const data = await res.json();
+    pollStatus(data.job_id);
+}
+
+async function pollStatus(jobId) {
+    const interval = setInterval(async () => {
+        const res = await fetch(`${API_BASE}/status/${jobId}`);
+        const data = await res.json();
+
+        if (data.status === "completed") {
+            clearInterval(interval);
+            document.getElementById("status").innerHTML = "✅ Course Generated";
+            renderCourse(data.result);
+        }
+
+        if (data.status === "failed") {
+            clearInterval(interval);
+            document.getElementById("status").innerHTML =
+                `<span class='error'>❌ ${data.error}</span>`;
+        }
+    }, 3000);
+}
+
+function renderCourse(course) {
+    const container = document.getElementById("result");
+
+    container.innerHTML += `<h2>${course.course_title}</h2>`;
+
+    course.modules.forEach(module => {
+        const modDiv = document.createElement("div");
+        modDiv.className = "module";
+        modDiv.innerHTML = `<h3>${module.course_title}</h3>`;
+
+        module.lessons.forEach(lesson => {
+            const lessonDiv = document.createElement("div");
+            lessonDiv.className = "lesson";
+
+            lessonDiv.innerHTML = `
+                <h4>${lesson.lesson_number}. ${lesson.lesson_title}</h4>
+                <p><b>Notes:</b></p>
+                <ul>
+                    ${lesson.notes.map(n => `<li>${n}</li>`).join("")}
+                </ul>
+                <div class="quiz">
+                    <b>Quiz:</b>
+                    ${lesson.quiz.map(q => `
+                        <p>${q.question}</p>
+                        <ul>
+                            ${q.options.map(o => `<li>${o}</li>`).join("")}
+                        </ul>
+                    `).join("")}
+                </div>
+            `;
+            modDiv.appendChild(lessonDiv);
+        });
+
+        container.appendChild(modDiv);
+    });
+}
+</script>
+
+</body>
+</html>

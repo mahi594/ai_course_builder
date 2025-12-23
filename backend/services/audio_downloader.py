@@ -1,21 +1,25 @@
-import yt_dlp
 import os
+import subprocess
+import uuid
 
 AUDIO_DIR = "data/audio"
 os.makedirs(AUDIO_DIR, exist_ok=True)
 
 
 def download_audio(youtube_url: str) -> str:
-    ydl_opts = {
-        "format": "bestaudio/best",
-        "outtmpl": f"{AUDIO_DIR}/%(id)s.%(ext)s",
-        "quiet": True,
-        "postprocessors": [{
-            "key": "FFmpegExtractAudio",
-            "preferredcodec": "mp3",
-        }],
-    }
+    audio_id = str(uuid.uuid4())
+    output_path = os.path.join(AUDIO_DIR, audio_id)
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(youtube_url, download=True)
-        return f"{AUDIO_DIR}/{info['id']}.mp3"
+    command = [
+        "yt-dlp",
+        "-f", "bestaudio",
+        "--no-playlist",
+        "--extract-audio",
+        "--audio-format", "wav",
+        "-o", f"{output_path}.%(ext)s",
+        youtube_url
+    ]
+
+    subprocess.run(command, check=True)
+
+    return f"{output_path}.wav"

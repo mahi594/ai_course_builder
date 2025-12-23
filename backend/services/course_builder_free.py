@@ -1,45 +1,36 @@
-from backend.services.transcript_cache import get_cached_transcript
-from backend.services.lesson_segmenter_free import segment_transcript_into_lessons
-from backend.services.notes_generator_free import generate_notes_for_lesson
-from backend.services.quiz_generator_free import generate_quiz_for_lesson
+from backend.services.youtube_search import search_youtube_videos
+from backend.services.syllabus_generator import get_course_syllabus
+from backend.services.recommendation_service import recommend_courses
+from backend.services.ai_content_generator import generate_notes, generate_quiz
 
+def build_course_from_topic(topic: str, difficulty="beginner"):
+    syllabus = get_course_syllabus(topic, difficulty)
 
-def build_course_from_youtube(
-    youtube_url: str,
-    course_title: str = "Auto Generated Course",
-    num_lessons: int = 5
-) -> dict:
-    """
-    Builds a full course (lessons + notes + quizzes)
-    from a YouTube video.
-    """
-
-    # 1️⃣ Get transcript (cached)
-    transcript = get_cached_transcript(youtube_url)
-
-    # 2️⃣ Segment lessons
-    lesson_data = segment_transcript_into_lessons(
-        transcript,
-        num_lessons=num_lessons
-    )
-
-    full_course = {
-        "course_title": course_title,
-        "source": youtube_url,
-        "lessons": []
+    course = {
+        "course_title": f"{topic.title()} ({difficulty.title()})",
+        "difficulty": difficulty,
+        "modules": [],
+        "recommendations": recommend_courses(topic)
     }
 
-    # 3️⃣ Generate notes + quiz for each lesson
-    for lesson in lesson_data["lessons"]:
-        notes = generate_notes_for_lesson(transcript, lesson)
-        quiz = generate_quiz_for_lesson(lesson, notes)
+    for i, unit in enumerate(syllabus, 1):
+        videos = search_youtube_videos(unit, difficulty, max_results=1)
+        video_url = videos[0] if videos else None
 
-        full_course["lessons"].append({
-            "lesson_number": lesson["lesson_number"],
-            "lesson_title": lesson["lesson_title"],
-            "key_points": lesson["key_points"],
-            "notes": notes["notes"],
-            "quiz": quiz["questions"]
-        })
+        # ✅ AI-generated notes (ALWAYS list[str])
+        notes = generate_notes(unit, difficulty)
 
-    return full_course
+        # ✅ AI-generated quiz (ALWAYS list[dict])
+        quiz = generate_quiz(unit, difficulty)
+        
+
+        module = {
+            "module_title": f"Module {i}: {unit}",
+            "video_url": video_url,
+            "notes": notes,   # ✅ FIXED
+            "quiz": quiz
+        }
+
+        course["modules"].append(module)
+
+    return course
