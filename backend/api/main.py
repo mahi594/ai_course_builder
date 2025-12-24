@@ -28,3 +28,11 @@ class CourseRequest(BaseModel):
 @app.post("/generate-course")
 def generate_course(req: CourseRequest):
     return build_course_from_topic(req.topic, req.difficulty)
+
+
+@app.get("/")
+def root():
+    return {
+        "status": "AI Course Builder backend is running",
+        "docs": "/docs"
+    }
