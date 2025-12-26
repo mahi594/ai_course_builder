@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+const API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://ai-course-builder-1-smgs.onrender.com";
+
 function Signup({ onSwitch }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,8 +13,7 @@ function Signup({ onSwitch }) {
   const signup = async () => {
     try {
       await axios.post(
-        "http://127.0.0.1:8000/auth/signup",
-        null,
+        `${API_URL}/auth/signup`,
          { email, 
            password } 
       );
