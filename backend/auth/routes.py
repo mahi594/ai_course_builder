@@ -8,6 +8,10 @@ from backend.auth.utils import hash_password, verify_password, create_access_tok
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
+
+# -------------------------
+# DB Dependency
+# -------------------------
 def get_db():
     db = SessionLocal()
     try:
@@ -15,10 +19,18 @@ def get_db():
     finally:
         db.close()
 
+
+# -------------------------
+# Request Schemas
+# -------------------------
 class AuthRequest(BaseModel):
     email: str
     password: str
 
+
+# -------------------------
+# Signup
+# -------------------------
 @router.post("/signup")
 def signup(data: AuthRequest, db: Session = Depends(get_db)):
     if db.query(User).filter(User.email == data.email).first():
@@ -30,8 +42,13 @@ def signup(data: AuthRequest, db: Session = Depends(get_db)):
     )
     db.add(user)
     db.commit()
+
     return {"message": "User created successfully"}
 
+
+# -------------------------
+# Login
+# -------------------------
 @router.post("/login")
 def login(data: AuthRequest, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == data.email).first()
@@ -40,4 +57,7 @@ def login(data: AuthRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
     token = create_access_token({"sub": user.email})
-    return {"access_token": token}
+    return {
+        "access_token": token,
+        "token_type": "bearer"
+    }

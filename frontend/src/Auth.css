@@ -1,0 +1,39 @@
+body {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  font-family: Arial, sans-serif;
+}
+
+.auth-box {
+  width: 320px;
+  margin: 120px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.auth-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  color: black;
+}
+
+.auth-box button {
+  width: 100%;
+  padding: 10px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.link {
+  color: #1e88e5;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.error {
+  color: red;
+}

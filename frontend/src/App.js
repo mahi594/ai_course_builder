@@ -3,23 +3,26 @@ import axios from "axios";
 import Login from "./Login";
 import "./App.css";
 
+const API_URL = "https://ai-course-builder-1-smgs.onrender.com"; 
+// ⬆️ change to localhost if testing locally
+
 function App() {
-  /* =====================
+  /* =========================
      AUTH
-  ====================== */
+  ========================= */
   const [token, setToken] = useState(localStorage.getItem("token"));
 
-  /* =====================
-     COURSE STATE
-  ====================== */
+  /* =========================
+     COURSE STATES
+  ========================= */
   const [topic, setTopic] = useState("");
   const [difficulty, setDifficulty] = useState("Beginner");
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  /* =====================
+  /* =========================
      PROGRESS TRACKING
-  ====================== */
+  ========================= */
   const [completed, setCompleted] = useState(
     JSON.parse(localStorage.getItem("completedModules")) || {}
   );
@@ -28,56 +31,29 @@ function App() {
     localStorage.setItem("completedModules", JSON.stringify(completed));
   }, [completed]);
 
-  /* =====================
+  /* =========================
      AUTH GATE
-  ====================== */
+  ========================= */
   if (!token) {
     return <Login setToken={setToken} />;
   }
 
-  /* =====================
-     LOGOUT
-  ====================== */
+  /* =========================
+     HANDLERS
+  ========================= */
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("completedModules");
     setToken(null);
   };
 
-  /* =====================
-     GENERATE COURSE
-  ====================== */
-  const generateCourse = async () => {
-    if (!topic.trim()) {
-      alert("Please enter a topic");
-      return;
-    }
-
-    setLoading(true);
-    setCourse(null);
-
-    try {
-      const res = await axios.post(
-        "http://127.0.0.1:8000/generate-course", // change to Render URL after deploy
-        { topic, difficulty },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setCourse(res.data);
-      setCompleted({});
-    } catch (err) {
-      alert("Failed to generate course");
-    }
-
-    setLoading(false);
+  const toggleComplete = (index) => {
+    setCompleted((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
   };
 
-  /* =====================
-     PROGRESS
-  ====================== */
   const progress =
     course?.modules?.length
       ? Math.round(
@@ -87,131 +63,156 @@ function App() {
         )
       : 0;
 
-  const toggleComplete = (index) => {
-    setCompleted({ ...completed, [index]: !completed[index] });
+  const generateCourse = async () => {
+    if (!topic) {
+      alert("Please enter a topic");
+      return;
+    }
+
+    setLoading(true);
+    setCourse(null);
+    setCompleted({});
+
+    try {
+      const res = await axios.post(
+        `${API_URL}/generate-course`,
+        { topic, difficulty },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setCourse(res.data);
+    } catch (err) {
+      alert("Failed to generate course");
+    }
+
+    setLoading(false);
   };
 
-  /* =====================
+  /* =========================
      UI
-  ====================== */
+  ========================= */
   return (
     <div className="container">
-      {/* HEADER */}
-      <div className="header">
-        <h1>AI Course Builder</h1>
-        <button className="logout-btn" onClick={logout}>
-          Logout
-        </button>
-      </div>
+      <button
+        onClick={logout}
+        style={{
+          background: "#d32f2f",
+          color: "#fff",
+          padding: "8px 14px",
+          border: "none",
+          borderRadius: "6px",
+          float: "right",
+          cursor: "pointer",
+        }}
+      >
+        Logout
+      </button>
 
-      {/* INPUTS */}
-      <div className="controls">
-        <input
-          className="input"
-          placeholder="Enter a topic (e.g. Machine Learning)"
-          value={topic}
-          onChange={(e) => setTopic(e.target.value)}
-        />
+      <h1>AI Course Builder</h1>
 
-        <select
-          className="select"
-          value={difficulty}
-          onChange={(e) => setDifficulty(e.target.value)}
-        >
-          <option>Beginner</option>
-          <option>Intermediate</option>
-          <option>Advanced</option>
-        </select>
+      <input
+        placeholder="Enter course topic (e.g. Machine Learning)"
+        value={topic}
+        onChange={(e) => setTopic(e.target.value)}
+      />
 
-        <button className="primary-btn" onClick={generateCourse}>
-          Generate Course
-        </button>
-      </div>
+      <select
+        value={difficulty}
+        onChange={(e) => setDifficulty(e.target.value)}
+      >
+        <option>Beginner</option>
+        <option>Intermediate</option>
+        <option>Advanced</option>
+      </select>
 
-      {loading && <p className="loading">⏳ Generating course…</p>}
+      <button onClick={generateCourse}>Generate Course</button>
 
-      {/* COURSE */}
+      {loading && <p>⏳ Generating course…</p>}
+
+      {/* =========================
+          COURSE OUTPUT
+      ========================= */}
       {course && (
         <>
-          <h2 className="course-title">{course.course_title}</h2>
+          <h2>{course.course_title}</h2>
+          <p>📘 Course generated using syllabus-based learning.</p>
 
-          {/* PROGRESS BAR */}
-          <div className="progress-wrapper">
-            <strong>Progress: {progress}%</strong>
-            <div className="progress-bar">
-              <div
-                className="progress-fill"
-                style={{ width: `${progress}%` }}
-              />
+          {/* Progress Bar */}
+          {course.modules?.length > 0 && (
+            <div style={{ margin: "20px 0" }}>
+              <strong>Progress: {progress}%</strong>
+              <div style={{ background: "#ddd", height: 10, borderRadius: 5 }}>
+                <div
+                  style={{
+                    width: `${progress}%`,
+                    background: "#4caf50",
+                    height: "100%",
+                    borderRadius: 5,
+                  }}
+                />
+              </div>
             </div>
-          </div>
-
-          {/* MODULES */}
-          {course.modules?.length > 0 ? (
-            course.modules.map((m, i) => {
-              const videoId =
-                m.video_url && m.video_url.includes("v=")
-                  ? m.video_url.split("v=")[1].split("&")[0]
-                  : null;
-
-              return (
-                <div className="card" key={i}>
-                  <div className="card-header">
-                    <h3>{m.module_title}</h3>
-
-                    <label className="checkbox">
-                      <input
-                        type="checkbox"
-                        checked={completed[i] || false}
-                        onChange={() => toggleComplete(i)}
-                      />
-                      Completed
-                    </label>
-                  </div>
-
-                  {/* YOUTUBE EMBED */}
-                  {videoId && (
-                    <iframe
-                      width="100%"
-                      height="315"
-                      src={`https://www.youtube.com/embed/${videoId}`}
-                      title={m.module_title}
-                      allowFullScreen
-                    />
-                  )}
-
-                  {/* NOTES */}
-                  <h4>Notes</h4>
-                  <ul>
-                    {Array.isArray(m.notes) &&
-                      m.notes.map((n, j) => <li key={j}>{n}</li>)}
-                  </ul>
-
-                  {/* QUIZ */}
-                  <h4>Quiz</h4>
-                  <ul>
-                    {Array.isArray(m.quiz) &&
-                      m.quiz.map((q, j) => (
-                        <li key={j}>
-                          <strong>{q.question}</strong>
-                          {q.options && (
-                            <ul>
-                              {q.options.map((op, k) => (
-                                <li key={k}>{op}</li>
-                              ))}
-                            </ul>
-                          )}
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              );
-            })
-          ) : (
-            <p>No modules generated.</p>
           )}
 
-          {/* RECOMMENDATIONS */}
+          {/* Modules */}
+          {course.modules?.map((m, i) => (
+            <div className="card" key={i}>
+              <h3>{m.module_title}</h3>
+
+              {/* Completion */}
+              <label style={{ display: "block", marginBottom: 10 }}>
+                <input
+                  type="checkbox"
+                  checked={completed[i] || false}
+                  onChange={() => toggleComplete(i)}
+                />{" "}
+                Mark as completed
+              </label>
+
+              {/* YouTube Embed */}
+              {m.video_url && m.video_url.includes("v=") && (
+                <iframe
+                  width="100%"
+                  height="315"
+                  src={`https://www.youtube.com/embed/${
+                    m.video_url.split("v=")[1]
+                  }`}
+                  title={m.module_title}
+                  allowFullScreen
+                />
+              )}
+
+              {/* Notes */}
+              <h4>Notes</h4>
+              <ul>
+                {m.notes.map((n, j) => (
+                  <li key={j}>{n}</li>
+                ))}
+              </ul>
+
+              {/* Quiz */}
+              <h4>Quiz</h4>
+              <ul className="quiz">
+                {m.quiz.map((q, j) => (
+                  <li key={j} className="quiz-item">
+                    <strong>{q.question}</strong>
+                    {q.options && (
+                      <ul className="quiz-options">
+                        {q.options.map((op, k) => (
+                          <li key={k}>{op}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          {/* Recommendations */}
           {course.recommendations && (
             <>
               <h3>🎓 Recommended Courses</h3>

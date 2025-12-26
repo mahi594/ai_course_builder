@@ -1,77 +1,112 @@
-/* ===== Global ===== */
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
 body {
-  background: linear-gradient(135deg, #0f172a, #020617);
-  color: #e5e7eb;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  min-height: 100vh;
 }
 
-/* ===== Container ===== */
 .container {
-  max-width: 800px;
-  margin: 80px auto;
-  padding: 30px;
-}
-
-/* ===== Inputs & Select ===== */
-input,
-select {
-  width: 100%;
-  padding: 14px;
-  margin: 12px 0;
-  border-radius: 10px;
-  border: none;
-  font-size: 16px;
-
-  /* 🔥 FIX */
-  background-color: #ffffff;
-  color: #111827;          /* text color */
-}
-
-/* Placeholder color */
-input::placeholder {
-  color: #6b7280;
-}
-
-/* Dropdown options */
-select option {
-  color: #111827;
+  max-width: 900px;
+  margin: 40px auto;
   background: #ffffff;
-}
-
-/* ===== Button ===== */
-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 10px;
+  padding: 30px;
   border-radius: 12px;
-  border: none;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  background: #22c55e;
-  color: #022c22;
-}
-
-button:hover {
-  background: #16a34a;
-}
-
-/* ===== Cards ===== */
-.card {
-  background: #020617;
-  border: 1px solid #1e293b;
-  border-radius: 16px;
-  padding: 20px;
-  margin-top: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 h1 {
   text-align: center;
-  color: #22c55e;
-  margin-bottom: 10px;
+  color: #4a148c;
+  margin-bottom: 25px;
 }
 
-h2 {
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  color: #000;
+}
+
+select option {
+  color: #000;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #6a1b9a;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #4a148c;
+}
+
+.card {
+  background: #f9f9ff;
+  border-left: 6px solid #6a1b9a;
+  padding: 20px;
+  margin-top: 25px;
+  border-radius: 8px;
+}
+
+.card h3 {
+  color: #4a148c;
+}
+
+iframe {
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+.quiz {
+  margin-top: 10px;
+}
+
+.quiz-item {
+  margin-bottom: 15px;
+}
+
+.quiz-options {
+  margin-top: 5px;
+  padding-left: 20px;
+}
+
+.quiz-options li {
+  list-style-type: circle;
+}
+
+.auth-box {
+  max-width: 400px;
+  margin: 100px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.auth-box h2 {
   text-align: center;
-  color: #c7d2fe;
+  color: #4a148c;
+}
+
+.auth-box button {
+  margin-top: 15px;
 }
