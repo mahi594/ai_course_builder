@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Login from "./Login";
+import Signup from "./Signup";
 import "./App.css";
 
-// ✅ API URL (works locally + on Vercel)
+// ✅ API URL (local + deployed)
 const API_URL =
-  process.env.REACT_APP_API_URL ;
+  process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
 
 // ✅ Robust YouTube ID extractor
 const getYouTubeId = (url) => {
@@ -22,20 +23,30 @@ const getYouTubeId = (url) => {
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [showSignup, setShowSignup] = useState(false);
+
   const [topic, setTopic] = useState("");
   const [difficulty, setDifficulty] = useState("Beginner");
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // 🔐 Auth Gate
+  // 🔐 AUTH GATE
   if (!token) {
-    return <Login setToken={setToken} />;
+    return showSignup ? (
+      <Signup onSwitch={() => setShowSignup(false)} />
+    ) : (
+      <Login
+        setToken={setToken}
+        onSwitch={() => setShowSignup(true)}
+      />
+    );
   }
 
   // 🚪 Logout
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);
+    setCourse(null);
   };
 
   // 🎓 Generate Course
@@ -68,7 +79,7 @@ function App() {
 
   return (
     <div className="container">
-      {/* 🔝 Header */}
+      {/* Header */}
       <div className="top-bar">
         <h1>🎓 AI Course Builder</h1>
         <button className="logout-btn" onClick={logout}>
@@ -76,10 +87,10 @@ function App() {
         </button>
       </div>
 
-      {/* 🧠 Input Section */}
+      {/* Inputs */}
       <input
         className="input"
-        placeholder="Enter a topic (e.g. Machine Learning)"
+        placeholder="Enter topic (e.g. Machine Learning)"
         value={topic}
         onChange={(e) => setTopic(e.target.value)}
       />
@@ -100,12 +111,10 @@ function App() {
 
       {loading && <p className="loading">⏳ Generating course…</p>}
 
-      {/* 📘 Course Output */}
+      {/* Course Output */}
       {course && (
         <>
-          <h2 className="course-title">
-            {course.course_title} ({difficulty})
-          </h2>
+          <h2 className="course-title">{course.course_title}</h2>
 
           {course.modules.map((m, i) => {
             const videoId = getYouTubeId(m.video_url);
@@ -122,12 +131,11 @@ function App() {
                     src={`https://www.youtube.com/embed/${videoId}`}
                     title={m.module_title}
                     frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                   />
                 )}
 
-                {/* 📘 Notes */}
+                {/* Notes */}
                 <h4>📘 Notes</h4>
                 <ul>
                   {m.notes.map((n, j) => (
@@ -135,7 +143,7 @@ function App() {
                   ))}
                 </ul>
 
-                {/* 📝 Quiz */}
+                {/* Quiz */}
                 <h4>📝 Quiz</h4>
                 <ul>
                   {m.quiz.map((q, j) => (
@@ -154,3 +162,5 @@ function App() {
 }
 
 export default App;
+
+console.log("API URL:", API_URL);

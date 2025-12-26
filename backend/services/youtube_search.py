@@ -1,61 +1,28 @@
-import subprocess
+import requests
+import os
 
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 
-def _search(query: str, max_results: int, require_subs: bool):
-    """
-    Internal helper to search YouTube using yt-dlp
-    """
-
-    command = [
-        "yt-dlp",
-        f"ytsearch{max_results}:{query}",
-        "--get-id",
-        "--no-warnings"
-    ]
-
-    # 🔒 Force captioned videos only
-    if require_subs:
-        command.extend([
-            "--match-filter",
-            "subtitles != null"
-        ])
-
-    try:
-        result = subprocess.check_output(
-            command,
-            stderr=subprocess.DEVNULL,
-            text=True
-        )
-
-        video_ids = result.strip().split("\n")
-
-        return [
-            f"https://www.youtube.com/watch?v={vid}"
-            for vid in video_ids
-            if vid
-        ]
-
-    except Exception as e:
-        print("❌ YouTube search failed:", e)
+def search_youtube_videos(query, difficulty="beginner", max_results=1):
+    if not YOUTUBE_API_KEY:
         return []
 
-def search_youtube_videos(topic, difficulty="beginner", max_results=2):
-    query = f"{topic} {difficulty} tutorial"
+    search_query = f"{query} {difficulty} tutorial"
 
-    command = [
-        "yt-dlp",
-        f"ytsearch{max_results}:{query}",
-        "--get-id",
-        "--no-warnings"
-    ]
+    url = "https://www.googleapis.com/youtube/v3/search"
+    params = {
+        "part": "snippet",
+        "q": search_query,
+        "type": "video",
+        "maxResults": max_results,
+        "key": YOUTUBE_API_KEY
+    }
 
-    try:
-        result = subprocess.check_output(command, text=True)
-        ids = result.strip().split("\n")
+    res = requests.get(url, params=params).json()
 
-        return [
-            f"https://www.youtube.com/watch?v={vid}"
-            for vid in ids if vid
-        ]
-    except:
-        return []
+    videos = []
+    for item in res.get("items", []):
+        video_id = item["id"]["videoId"]
+        videos.append(f"https://www.youtube.com/watch?v={video_id}")
+
+    return videos

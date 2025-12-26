@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const API_URL =
-  process.env.REACT_APP_API_URL ;
+  process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
 
 function Login({ setToken, onSwitch }) {
   const [email, setEmail] = useState("");
@@ -10,8 +10,6 @@ function Login({ setToken, onSwitch }) {
   const [error, setError] = useState("");
 
   const login = async () => {
-    setError("");
-
     try {
       const res = await axios.post(`${API_URL}/auth/login`, {
         email,
@@ -20,12 +18,8 @@ function Login({ setToken, onSwitch }) {
 
       localStorage.setItem("token", res.data.access_token);
       setToken(res.data.access_token);
-    } catch (err) {
-      if (err.response?.data?.detail) {
-        setError(err.response.data.detail);
-      } else {
-        setError("❌ Invalid credentials");
-      }
+    } catch {
+      setError("Invalid credentials");
     }
   };
 
