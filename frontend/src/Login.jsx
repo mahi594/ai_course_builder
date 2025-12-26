@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const API_URL =
-  process.env.REACT_APP_API_URL ||
-  "https://ai-course-builder-1-smgs.onrender.com";
+  process.env.REACT_APP_API_URL ;
 
 function Login({ setToken, onSwitch }) {
   const [email, setEmail] = useState("");

@@ -1,72 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Login from "./Login";
+import Signup from "./Signup";
 import "./App.css";
-import AuthPage from "./AuthPage";
 
-const API_URL = "https://ai-course-builder-1-smgs.onrender.com"; 
-// ⬆️ change to localhost if testing locally
+// ✅ API URL (local OR deployed)
+const API_URL =
+  process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
+
+// ✅ Robust YouTube embed helper
+const getYouTubeEmbedUrl = (url) => {
+  if (!url) return null;
+
+  if (url.includes("youtube.com/watch")) {
+    const videoId = new URL(url).searchParams.get("v");
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  if (url.includes("youtu.be")) {
+    const videoId = url.split("youtu.be/")[1];
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+
+  if (url.includes("youtube.com/embed")) {
+    return url;
+  }
+
+  return null;
+};
 
 function App() {
-  /* =========================
-     AUTH
-  ========================= */
+  // 🔐 Auth state
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [showSignup, setShowSignup] = useState(false);
 
-  /* =========================
-     COURSE STATES
-  ========================= */
+  // 📘 Course state
   const [topic, setTopic] = useState("");
   const [difficulty, setDifficulty] = useState("Beginner");
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  /* =========================
-     PROGRESS TRACKING
-  ========================= */
-  const [completed, setCompleted] = useState(
-    JSON.parse(localStorage.getItem("completedModules")) || {}
-  );
-
-  useEffect(() => {
-    localStorage.setItem("completedModules", JSON.stringify(completed));
-  }, [completed]);
-
-  /* =========================
-     AUTH GATE
-  ========================= */
-
-
-  if (!token) {
-   return <AuthPage setToken={setToken} />;
-}
-
-
-  /* =========================
-     HANDLERS
-  ========================= */
+  // 🚪 Logout
   const logout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("completedModules");
     setToken(null);
+    setCourse(null);
   };
 
-  const toggleComplete = (index) => {
-    setCompleted((prev) => ({
-      ...prev,
-      [index]: !prev[index],
-    }));
-  };
-
-  const progress =
-    course?.modules?.length
-      ? Math.round(
-          (Object.values(completed).filter(Boolean).length /
-            course.modules.length) *
-            100
-        )
-      : 0;
-
+  // 🧠 Generate course
   const generateCourse = async () => {
     if (!topic) {
       alert("Please enter a topic");
@@ -75,7 +56,6 @@ function App() {
 
     setLoading(true);
     setCourse(null);
-    setCompleted({});
 
     try {
       const res = await axios.post(
@@ -87,6 +67,7 @@ function App() {
           },
         }
       );
+
       setCourse(res.data);
     } catch (err) {
       alert("Failed to generate course");
@@ -95,116 +76,86 @@ function App() {
     setLoading(false);
   };
 
-  /* =========================
-     UI
-  ========================= */
+  // 🔐 Auth Gate
+  if (!token) {
+    return showSignup ? (
+      <Signup onSwitch={() => setShowSignup(false)} />
+    ) : (
+      <Login
+        setToken={setToken}
+        onSwitch={() => setShowSignup(true)}
+      />
+    );
+  }
+
+  // 🎓 Main App
   return (
     <div className="container">
-      <button
-        onClick={logout}
-        style={{
-          background: "#d32f2f",
-          color: "#fff",
-          padding: "8px 14px",
-          border: "none",
-          borderRadius: "6px",
-          float: "right",
-          cursor: "pointer",
-        }}
-      >
-        Logout
-      </button>
+      <header className="top-bar">
+        <h1>🎓 AI Course Builder</h1>
+        <button className="logout-btn" onClick={logout}>
+          Logout
+        </button>
+      </header>
 
-      <h1>AI Course Builder</h1>
+      <div className="controls">
+        <input
+          placeholder="Enter a topic (e.g. Machine Learning)"
+          value={topic}
+          onChange={(e) => setTopic(e.target.value)}
+        />
 
-      <input
-        placeholder="Enter course topic (e.g. Machine Learning)"
-        value={topic}
-        onChange={(e) => setTopic(e.target.value)}
-      />
+        <select
+          value={difficulty}
+          onChange={(e) => setDifficulty(e.target.value)}
+        >
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Advanced</option>
+        </select>
 
-      <select
-        value={difficulty}
-        onChange={(e) => setDifficulty(e.target.value)}
-      >
-        <option>Beginner</option>
-        <option>Intermediate</option>
-        <option>Advanced</option>
-      </select>
+        <button onClick={generateCourse}>
+          Generate Course
+        </button>
+      </div>
 
-      <button onClick={generateCourse}>Generate Course</button>
+      {loading && <p className="loading">⏳ Generating course...</p>}
 
-      {loading && <p>⏳ Generating course…</p>}
-
-      {/* =========================
-          COURSE OUTPUT
-      ========================= */}
       {course && (
         <>
-          <h2>{course.course_title}</h2>
-          <p>📘 Course generated using syllabus-based learning.</p>
+          <h2 className="course-title">{course.course_title}</h2>
 
-          {/* Progress Bar */}
-          {course.modules?.length > 0 && (
-            <div style={{ margin: "20px 0" }}>
-              <strong>Progress: {progress}%</strong>
-              <div style={{ background: "#ddd", height: 10, borderRadius: 5 }}>
-                <div
-                  style={{
-                    width: `${progress}%`,
-                    background: "#4caf50",
-                    height: "100%",
-                    borderRadius: 5,
-                  }}
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Modules */}
-          {course.modules?.map((m, i) => (
+          {course.modules.map((m, i) => (
             <div className="card" key={i}>
               <h3>{m.module_title}</h3>
 
-              {/* Completion */}
-              <label style={{ display: "block", marginBottom: 10 }}>
-                <input
-                  type="checkbox"
-                  checked={completed[i] || false}
-                  onChange={() => toggleComplete(i)}
-                />{" "}
-                Mark as completed
-              </label>
-
-              {/* YouTube Embed */}
-              {m.video_url && m.video_url.includes("v=") && (
+              {/* ✅ YouTube Embed */}
+              {m.video_url && (
                 <iframe
                   width="100%"
                   height="315"
-                  src={`https://www.youtube.com/embed/${
-                    m.video_url.split("v=")[1]
-                  }`}
+                  src={getYouTubeEmbedUrl(m.video_url)}
                   title={m.module_title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
               )}
 
-              {/* Notes */}
-              <h4>Notes</h4>
+              <h4>📘 Notes</h4>
               <ul>
                 {m.notes.map((n, j) => (
                   <li key={j}>{n}</li>
                 ))}
               </ul>
 
-              {/* Quiz */}
-              <h4>Quiz</h4>
-              <ul className="quiz">
+              <h4>📝 Quiz</h4>
+              <ul>
                 {m.quiz.map((q, j) => (
-                  <li key={j} className="quiz-item">
+                  <li key={j}>
                     <strong>{q.question}</strong>
                     {q.options && (
-                      <ul className="quiz-options">
+                      <ul>
                         {q.options.map((op, k) => (
                           <li key={k}>{op}</li>
                         ))}
@@ -215,29 +166,6 @@ function App() {
               </ul>
             </div>
           ))}
-
-          {/* Recommendations */}
-          {course.recommendations && (
-            <>
-              <h3>🎓 Recommended Courses</h3>
-
-              {course.recommendations.udemy?.map((c, i) => (
-                <p key={i}>
-                  <a href={c.url} target="_blank" rel="noreferrer">
-                    {c.title}
-                  </a>
-                </p>
-              ))}
-
-              {course.recommendations.coursera?.map((c, i) => (
-                <p key={i}>
-                  <a href={c.url} target="_blank" rel="noreferrer">
-                    {c.title}
-                  </a>
-                </p>
-              ))}
-            </>
-          )}
         </>
       )}
     </div>
