@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Login from "./Login";
 import "./App.css";
+import AuthPage from "./AuthPage";
 
 const API_URL = "https://ai-course-builder-1-smgs.onrender.com"; 
 // ⬆️ change to localhost if testing locally
@@ -34,9 +35,12 @@ function App() {
   /* =========================
      AUTH GATE
   ========================= */
+
+
   if (!token) {
-    return <Login setToken={setToken} />;
-  }
+   return <AuthPage setToken={setToken} />;
+}
+
 
   /* =========================
      HANDLERS

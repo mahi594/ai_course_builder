@@ -11,15 +11,15 @@ function Signup({ onSwitch }) {
   const [msg, setMsg] = useState("");
 
   const signup = async () => {
+    setMsg("");
     try {
-      await axios.post(
-        `${API_URL}/auth/signup`,
-         { email, 
-           password } 
-      );
-      setMsg("Signup successful. Please login.");
-    } catch {
-      setMsg("Signup failed");
+      await axios.post(`${API_URL}/auth/signup`, {
+        email,
+        password,
+      });
+      setMsg("✅ Signup successful. Please login.");
+    } catch (err) {
+      setMsg(err.response?.data?.detail || "❌ Signup failed");
     }
   };
 
@@ -27,8 +27,18 @@ function Signup({ onSwitch }) {
     <div className="auth-box">
       <h2>Signup</h2>
 
-      <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+      <input
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
 
       <button onClick={signup}>Signup</button>
 
